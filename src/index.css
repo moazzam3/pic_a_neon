@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,900;1,600&family=Rubik:wght@400;500;600;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+/* Styling the thumb for Webkit (Chrome, Safari) */
+input[type="range"]::-webkit-slider-thumb {
+  background-color: #6b46c1; /* Change this to your desired knob color */
+}
+
+/* Styling the thumb for Gecko (Firefox) */
+input[type="range"]::-moz-range-thumb {
+  background-color: #6b46c1;
+}
+@layer components {
+	.max-container {
+		width: 100%;
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+
+	.input {
+		@apply flex sm:flex-1 text-base leading-normal text-slate-700 pl-5 outline-none sm:border-none border;
+	}
+	/* RangeSelector.css */
+
+
+	.within-phone-input input {
+		@apply sm:flex-1 text-base leading-normal text-slate-700 pl-5 outline-none !border-none ring-1 min-h-[40px] !bg-slate-100 px-4 !py-2 !w-full h-full;
+	}
+	.within-phone-input .flag-dropdown {
+		@apply !border-none;
+	}
+	.neon-text {
+		text-shadow: 0 0 10px #ff00b4, 0 0 20px #ff00b4, 0 0 30px #ff00b4,
+			0 0 40px #ff00b4;
+	}
+	.accent-underline {
+		position: relative;
+		display: inline-block;
+	}
+	.accent-underline::after {
+		content: '';
+	}
+	.accent-underline::after {
+		@apply absolute left-0 bottom-0 w-1/2 mt-[0.5rem] h-1 bg-primary-500 block;
+	}
+	.animated-underline {
+		position: relative;
+		display: inline-block;
+	}
+	.animated-underline::after {
+		content: '';
+	}
+	.animated-underline::after {
+		@apply absolute left-0 bottom-0 w-0 mt-[0.5rem] h-[2px] block;
+	}
+	.active.animated-underline::after {
+		@apply w-full;
+	}
+	.animated-underline:hover::after {
+		@apply w-full;
+	}
+	.animated-underline::after {
+		@apply transition-all duration-300 ease-in-out;
+	}
+	.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+}
+@layer utilities {
+	.hero-heading {
+		@apply font-rubik text-3xl md:text-4xl lg:text-6xl text-white leading-10;
+	}
+	.sections-title {
+		@apply font-rubik text-2xl lg:text-4xl leading-none;
+	}
+	.padding {
+		@apply sm:px-16 px-8 sm:py-24 py-12;
+	}
+
+	.padding-x {
+		@apply sm:px-16 px-8;
+	}
+
+	.padding-y {
+		@apply sm:py-24 py-12;
+	}
+
+	.padding-l {
+		@apply sm:pl-16 pl-8;
+	}
+
+	.padding-r {
+		@apply sm:pr-16 pr-8;
+	}
+
+	.padding-t {
+		@apply sm:pt-24 pt-12;
+	}
+
+	.padding-b {
+		@apply sm:pb-24 pb-12;
+	}
+
+	.info-text {
+		@apply font-montserrat text-slate-gray text-lg leading-7;
+	}
+}
+@layer base {
+	body {
+		@apply font-poppins text-slate-700 bg-slate-50;
+	}
+
+	/* Responsive font sizes for headings */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: 'Rubik', sans-serif;
+		font-weight: 600;
+		margin-bottom: 0.5em;
+		@apply text-xl;
+	}
+
+	h1 {
+		@apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl; /* Adjust sizes as needed */
+	}
+
+	h2 {
+		@apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl; /* Adjust sizes as needed */
+	}
+
+	h3 {
+		@apply text-xl md:text-2xl lg:text-3xl xl:text-4xl; /* Adjust sizes as needed */
+	}
+
+	h4 {
+		@apply text-lg md:text-xl lg:text-2xl xl:text-3xl; /* Adjust sizes as needed */
+	}
+
+	h5 {
+		@apply text-base md:text-lg lg:text-xl xl:text-2xl; /* Adjust sizes as needed */
+	}
+
+	h6 {
+		@apply text-sm md:text-base lg:text-lg xl:text-xl; /* Adjust sizes as needed */
+	}
+}
