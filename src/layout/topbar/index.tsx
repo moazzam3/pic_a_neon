@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 
 // 3rd party libraries
 import { Popover, Transition } from '@headlessui/react';
-import { IconFrameOff, IconChevronDown } from '@tabler/icons-react';
+import { IconChevronDown } from '@tabler/icons-react';
 import { NavLink } from 'react-router-dom';
 
 // project imports
@@ -18,12 +18,121 @@ function Topbar() {
 	const [open, setOpen] = useState<boolean>(false);
 	const toggleOpen = () => setOpen(!open);
 	return (
-		<header className='bg-black text-white px-4 md:px-6 lg:px-10 relative'>
-			{/* wide screen nav */}
-			<nav className='min-h-[80px] items-center justify-between hidden xl:flex'>
-				<div />
-				<div className='flex items-center justify-center space-x-12'>
-					<ul className='flex items-center justify-center space-x-6 uppercase'>
+		<header className='bg-black text-white sticky top-0 z-50'>
+			<div className='relative w-full h-full px-4 md:px-6 lg:px-10'>
+				{/* wide screen nav */}
+				<nav className='min-h-[80px] items-center justify-between hidden xl:flex'>
+					<div />
+					<div className='flex items-center justify-center space-x-12'>
+						<ul className='flex items-center justify-center space-x-6 uppercase'>
+							<li>
+								<NavLink
+									className={({ isActive }) =>
+										`animated-underline after:bg-primary-500 ${
+											isActive && 'active'
+										}`
+									}
+									to={pages.home}
+								>
+									Home
+								</NavLink>
+							</li>
+							<li>
+								<NavLink
+									className={({ isActive }) =>
+										`animated-underline after:bg-primary-500 ${
+											isActive && 'active'
+										}`
+									}
+									to={pages.getaquote + '/Get A Quote'}
+								>
+									get a quote
+								</NavLink>
+							</li>
+							<li>
+								<NavLink
+									className={({ isActive }) =>
+										`animated-underline after:bg-primary-500 ${
+											isActive && 'active'
+										}`
+									}
+									to={pages.neon_builder}
+								>
+									Design your own neon
+								</NavLink>
+							</li>
+						</ul>
+						{/* <NavLink
+						className={({ isActive }) =>
+							`animated-underline after:bg-primary-500 ${isActive && 'active'}`
+						}
+						to={pages.home}
+					> */}
+						<img src={logo} alt='logo' className='w-40' />
+						{/* </NavLink> */}
+						<ul className='flex items-center justify-center space-x-6 uppercase'>
+							<li>
+								<a
+									className='animated-underline after:bg-primary-500'
+									href='#home'
+								>
+									Shop
+								</a>
+							</li>
+							<li>
+								<SolutionsMenu />
+							</li>
+							<li>
+								<NavLink
+									className='animated-underline after:bg-primary-500'
+									to={pages.getaquote + '/Outdoor Sign'}
+								>
+									outdoor sign
+								</NavLink>
+							</li>
+						</ul>
+					</div>
+					<div className='flex items-center gap-2'>
+						<IconButton>
+							<IconShoppingBag className='h-6 w-6' />
+						</IconButton>
+					</div>
+				</nav>
+
+				{/* mobile / tablets nac  */}
+				<nav className='min-h-[80px] items-center justify-between flex xl:hidden'>
+					<IconButton
+						aria-label={open ? 'Close Menu' : 'Open Menu'}
+						onClick={toggleOpen}
+					>
+						{open ? (
+							<IconX className='h-6 w-6' />
+						) : (
+							<IconMenu2 className='h-6 w-6' />
+						)}
+					</IconButton>
+					<div>
+						{/* <a href='#logo' className='flex items-center justify-center'> */}
+						<img src={logo} alt='logo' className='w-40' />
+						{/* </a> */}
+					</div>
+					<div className='flex items-center gap-2'>
+						<IconButton aria-label='Shopping Bag'>
+							<IconShoppingBag className='h-6 w-6' />
+						</IconButton>
+					</div>
+				</nav>
+
+				{/* drawer */}
+				<div
+					className={`mt-[80px] border-t border-slate-500 xl:hidden absolute top-0 left-0 right-0 z-10 min-h-screen w-full md:w-1/2 lg:w-1/3 bg-black ${
+						open && 'shadow-xl'
+					} shadow-slate-100 text-primary-500 transition-transform ease-linear ${
+						open ? 'translate-x-0' : '-translate-x-full'
+					}`}
+				>
+					{/* divider */}
+					<ul className='mt-4 flex flex-col justify-center space-y-6 uppercase px-10 text-lg'>
 						<li>
 							<NavLink
 								className={({ isActive }) =>
@@ -43,33 +152,19 @@ function Topbar() {
 										isActive && 'active'
 									}`
 								}
-								to={pages.getaquote}
+								to={pages.getaquote + '/Get A Quote'}
 							>
 								get a quote
 							</NavLink>
 						</li>
 						<li>
-							<NavLink
-								className={({ isActive }) =>
-									`animated-underline after:bg-primary-500 ${
-										isActive && 'active'
-									}`
-								}
-								to={pages.neon_builder}
+							<a
+								className='animated-underline after:bg-primary-500'
+								href='#design'
 							>
 								Design your own neon
-							</NavLink>
+							</a>
 						</li>
-					</ul>
-					{/* <NavLink
-						className={({ isActive }) =>
-							`animated-underline after:bg-primary-500 ${isActive && 'active'}`
-						}
-						to={pages.home}
-					> */}
-					<img src={logo} alt='logo' className='w-40' />
-					{/* </NavLink> */}
-					<ul className='flex items-center justify-center space-x-6 uppercase'>
 						<li>
 							<a
 								className='animated-underline after:bg-primary-500'
@@ -79,145 +174,102 @@ function Topbar() {
 							</a>
 						</li>
 						<li>
-							<SolutionsMenu />
-						</li>
-						<li>
-							<a
+							<NavLink
 								className='animated-underline after:bg-primary-500'
-								href='#design'
+								to={pages.getaquote + '/Outdoor Sign'}
 							>
 								outdoor sign
-							</a>
+							</NavLink>
 						</li>
 					</ul>
 				</div>
-				<div className='flex items-center gap-2'>
-					<IconButton>
-						<IconShoppingBag className='h-6 w-6' />
-					</IconButton>
-				</div>
-			</nav>
-
-			{/* mobile / tablets nac  */}
-			<nav className='min-h-[80px] items-center justify-between flex xl:hidden'>
-				<IconButton
-					aria-label={open ? 'Close Menu' : 'Open Menu'}
-					onClick={toggleOpen}
-				>
-					{open ? (
-						<IconX className='h-6 w-6' />
-					) : (
-						<IconMenu2 className='h-6 w-6' />
-					)}
-				</IconButton>
-				<div>
-					{/* <a href='#logo' className='flex items-center justify-center'> */}
-					<img src={logo} alt='logo' className='w-40' />
-					{/* </a> */}
-				</div>
-				<div className='flex items-center gap-2'>
-					<IconButton aria-label='Shopping Bag'>
-						<IconShoppingBag className='h-6 w-6' />
-					</IconButton>
-				</div>
-			</nav>
-
-			{/* drawer */}
-			<div
-				className={`mt-[80px] border-t border-slate-500 xl:hidden absolute top-0 left-0 z-10 min-h-screen w-full md:w-1/2 lg:w-1/3 bg-black ${
-					open && 'shadow-xl'
-				} shadow-slate-100 text-primary-500 transition-transform ease-linear ${
-					open ? 'translate-x-0' : '-translate-x-full'
-				}`}
-			>
-				{/* divider */}
-				<ul className='mt-4 flex flex-col justify-center space-y-6 uppercase px-10 text-lg'>
-					<li>
-						<NavLink
-							className={({ isActive }) =>
-								`animated-underline after:bg-primary-500 ${
-									isActive && 'active'
-								}`
-							}
-							to={pages.home}
-						>
-							Home
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							className={({ isActive }) =>
-								`animated-underline after:bg-primary-500 ${
-									isActive && 'active'
-								}`
-							}
-							to={pages.getaquote}
-						>
-							get a quote
-						</NavLink>
-					</li>
-					<li>
-						<a
-							className='animated-underline after:bg-primary-500'
-							href='#design'
-						>
-							Design your own neon
-						</a>
-					</li>
-					<li>
-						<a className='animated-underline after:bg-primary-500' href='#home'>
-							Shop
-						</a>
-					</li>
-					<li>
-						<a
-							className='animated-underline after:bg-primary-500'
-							href='#design'
-						>
-							outdoor sign
-						</a>
-					</li>
-				</ul>
 			</div>
 		</header>
 	);
 }
 
 export default Topbar;
-
-const solutions = [
+interface Link {
+	name: string;
+	href: string;
+}
+const LeftPanel: Link[] = [
 	{
-		name: 'Analytics',
-		description: 'Get a better understanding of your traffic',
+		name: 'matymejap@mailinator.com',
 		href: '#',
-		icon: IconFrameOff,
 	},
 	{
-		name: 'Engagement',
-		description: 'Speak directly to your customers',
+		name: 'Wall Art & sculptures',
 		href: '#',
-		icon: IconFrameOff,
 	},
 	{
-		name: 'Security',
-		description: "Your customers' data will be safe and secure",
+		name: 'Bar Signs',
 		href: '#',
-		icon: IconFrameOff,
 	},
 	{
-		name: 'Integrations',
-		description: 'Connect with third-party tools',
+		name: 'Parties & Special Occasions',
 		href: '#',
-		icon: IconFrameOff,
 	},
 	{
-		name: 'Automations',
-		description: 'Build strategic funnels that will convert',
+		name: 'Hone Decor',
 		href: '#',
-		icon: IconFrameOff,
+	},
+	{
+		name: "There's No Place Like Home Sign",
+		href: '#',
+	},
+	{
+		name: 'Desk Lights and Lamps',
+		href: '#',
+	},
+	{
+		name: 'LED Neon Sings',
+		href: '#',
+	},
+	{
+		name: 'Open Sings',
+		href: '#',
 	},
 ];
 
+const RightPanel: Link[] = [
+	{
+		name: 'Personalized Neon Signs',
+		href: '#',
+	},
+	{
+		name: 'Wedding Signs',
+		href: '#',
+	},
+	{
+		name: 'Cheap Neon Signs for Sale',
+		href: '#',
+	},
+	{
+		name: 'Hello Gorgeous Neon Light',
+		href: '#',
+	},
+	{
+		name: 'Mini neon Sings under $199',
+		href: '#',
+	},
+	{
+		name: 'Signs of Change',
+		href: '#',
+	},
+	{
+		name: 'Home Gyms & Fitness Studios',
+		href: '#',
+	},
+	{
+		name: 'LED Neon Quote Signs',
+		href: '#',
+	},
+	{
+		name: 'matymejap@mailinator.com',
+		href: '#',
+	},
+];
 function SolutionsMenu() {
 	return (
 		<Popover className='relative'>
@@ -226,7 +278,7 @@ function SolutionsMenu() {
 				aria-haspopup='true'
 				aria-expanded={open}
 			>
-				<span>Solutions</span>
+				<span>Collections</span>
 				<IconChevronDown className='h-5 w-5' aria-hidden='true' />
 			</Popover.Button>
 
@@ -240,35 +292,35 @@ function SolutionsMenu() {
 				leaveTo='opacity-0 translate-y-1'
 			>
 				<Popover.Panel className='absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4'>
-					<div className='w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm shadow-lg ring-1 ring-gray-900/5'>
+					<div className='w-screen max-w-2xl flex-auto overflow-hidden rounded-3xl bg-white text-sm shadow-lg ring-1 ring-gray-900/5'>
 						<div className='flex items-center py-4'>
 							<div className='p-4 flex-1 border-r border-gray-400'>
-								{solutions.map((item) => (
-									<a
+								{LeftPanel.map((item) => (
+									<NavLink
 										key={item.name}
-										href={item.href}
-										className='group relative flex gap-x-6 rounded-lg p-4 font-semibold text-gray-900 hover:bg-gray-200'
+										to={item.href}
+										className='group relative flex gap-x-6 rounded-lg p-4 font-semibold text-gray-900 hover:bg-primary-500 hover:text-primary-500 hover:bg-opacity-10 hover:ring-2 hover:ring-primary-500 hover:ring-opacity-50 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-opacity-50'
 									>
 										{item.name}
-									</a>
+									</NavLink>
 								))}
 							</div>
 							<div className='p-4 flex-1'>
-								{solutions.map((item) => (
-									<a
+								{RightPanel.map((item) => (
+									<NavLink
 										key={item.name}
-										href={item.href}
-										className='group relative flex gap-x-6 rounded-lg p-4 font-semibold text-gray-900 hover:bg-gray-50'
+										to={item.href}
+										className='group relative flex gap-x-6 rounded-lg p-4 font-semibold text-gray-900 hover:bg-primary-500 hover:text-primary-500 hover:bg-opacity-10 hover:ring-2 hover:ring-primary-500 hover:ring-opacity-50 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-opacity-50'
 									>
 										{item.name}
-									</a>
+									</NavLink>
 								))}
 							</div>
 						</div>
 						<div className='divide-x divide-gray-900/5 bg-gray-50'>
 							<a
 								href='#'
-								className='flex items-center justify-center gap-x-2.5 p-3 font-semibold bg-slate-700 text-gray-50 hover:bg-gray-40'
+								className='animated-underline after:bg-white flex items-center justify-center gap-x-2.5 p-3 font-semibold bg-slate-700 text-gray-50 hover:bg-gray-40'
 							>
 								view all collections
 							</a>

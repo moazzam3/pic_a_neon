@@ -12,8 +12,6 @@ interface AlignBtnProps {
 
 const AlignSelector = (props: AlignBtnProps): ReactElement => {
 	const { options, value, onChange } = props;
-	console.clear();
-	console.log(value);
 	function getRounded(index: number): string {
 		if (index === 0) {
 			return 'rounded-tl rounded-bl';

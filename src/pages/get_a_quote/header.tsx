@@ -1,12 +1,17 @@
+import { useParams } from 'react-router-dom';
+
 // icons
 import { IconCircleChevronsLeft } from '@tabler/icons-react';
 
 function Header() {
+	
+	const {id} = useParams()
+
 	return (
 		<article>
 			<div className=' text-center'>
 				<h1 className='text-black uppercase sections-title accent-underline'>
-					get a quote
+					{id}
 				</h1>
 			</div>
 			<div className='flex justify-center'>

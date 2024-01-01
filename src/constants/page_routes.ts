@@ -4,4 +4,5 @@ export const pages = {
   contact: '/contact',
   getaquote: '/getaquote',
   neon_builder: '/neon_builder',
+  collections: '/collections',
 };

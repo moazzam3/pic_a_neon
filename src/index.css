@@ -39,9 +39,10 @@ input[type="range"]::-moz-range-thumb {
 		@apply !border-none;
 	}
 	.neon-text {
-		text-shadow: 0 0 10px #ff00b4, 0 0 20px #ff00b4, 0 0 30px #ff00b4,
-			0 0 40px #ff00b4;
+		text-shadow: 0 0 10px var(--neon-color,#ff00b4), 0 0 20px var(--neon-color,#ff00b4), 0 0 30px var(--neon-color,#ff00b4),
+			0 0 40px var(--neon-color,#ff00b4);
 	}
+	
 	.accent-underline {
 		position: relative;
 		display: inline-block;

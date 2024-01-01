@@ -27,7 +27,7 @@ function ColorSelector(props: ColorSelectorProps): ReactElement {
 						item.id === value.id ? `boder-[${item.hex}]` : 'border-transparent'
 					}`}
 				>
-					<span className={`whitespace-nowrap`}>{item.name}</span>
+					<span className='whitespace-nowrap text-sm'>{item.name}</span>
 				</RadioButton>
 			))}
 		</div>
@@ -45,7 +45,7 @@ function RadioButton(props: RadioButtonProps): ReactElement {
 
 	return (
 		<label
-			className={`flex flex-col gap-1 items-center cursor-pointer min-w-[60px] min-h-[60px] border p-2 aspect-square rounded-full ${className}`}
+			className={`flex flex-col gap-1 items-center cursor-pointer min-w-[60px] min-h-[60px] border p-2 aspect-square rounded ${className}`}
 		>
 			<input
 				type='radio'
@@ -53,7 +53,7 @@ function RadioButton(props: RadioButtonProps): ReactElement {
 				className={`visually-hidden`}
 				{...rest}
 			/>
-			<IconBolt size={40}/>
+			<IconBolt size={30} />
 			{children}
 		</label>
 	);
