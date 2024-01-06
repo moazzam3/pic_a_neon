@@ -91,6 +91,9 @@ input[type="range"]::-moz-range-thumb {
 	.sections-title {
 		@apply font-rubik text-2xl lg:text-4xl leading-none;
 	}
+	.gradient-primary{
+		background: radial-gradient(circle, rgb(255, 136, 220) 0%, rgb(255, 136, 220) 0%, rgb(255, 136, 220) 2%, rgba(255, 136, 220, 0.937) 3%, rgb(255, 136, 220) 22%, rgb(255, 136, 220) 40%, rgb(255, 166, 229) 52%, rgb(255, 255, 255))
+	}
 	.padding {
 		@apply sm:px-16 px-8 sm:py-24 py-12;
 	}

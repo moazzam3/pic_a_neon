@@ -21,8 +21,10 @@ import {
 import { IconAlignRight } from '@tabler/icons-react';
 import { IconAlignLeft } from '@tabler/icons-react';
 import { IconAlignCenter } from '@tabler/icons-react';
+import CurrentPricingCard from './currentPricingCard';
+import PremiumNeon from './premiumNeon';
 
-
+type AlignText = 'left' | 'right' | 'center' | 'justify';
 
 const alignments: Alignment[] = [
 	{
@@ -44,6 +46,21 @@ interface CustomStyles {
 	fontSize: string;
 }
 
+const stringOfNumbers: Record<number, string> = {
+	1: 'one line',
+	2: 'two line',
+	3: 'three line',
+};
+
+const noOfLinesMap: Record<string, number> = {
+	'one line': 1,
+	'two line': 2,
+	'three line': 3,
+};
+
+interface ContentText {
+	[key: string]: string; // Add an index signature
+}
 function NeonBilder() {
 	// ======================= Controls ================ //
 	const [font, setfont] = useState<string>('');
@@ -57,27 +74,22 @@ function NeonBilder() {
 	const [accessories, setaccessories] = useState<Accessory[]>([]);
 
 	// ======================= Content ================ //
-	interface ContentText {
-		[key: string]: string; // Add an index signature
-	}
-	const [contentText, setContentText] = useState<ContentText>({});
+
+	// const [contentText, setContentText] = useState<ContentText>({});
+	const [contentText, setContentText] = useState<ContentText>(() => {
+		return getArrayByLength(Object.keys(stringOfNumbers).length).reduce(
+			(acc, item) => {
+				return { ...acc, [item]: '' };
+			},
+			{}
+		);
+	});
+
 	const [isShowAllFamilies, setIsShowAllFamilies] = useState<boolean>(false);
 
 	const toggleFamiliesNumber = () => setIsShowAllFamilies((prev) => !prev);
 
 	const filteredFamilies = isShowAllFamilies ? fonts : fonts.slice(0, 4);
-
-	const stringOfNumbers: Record<number, string> = {
-		1: 'one line',
-		2: 'two line',
-		3: 'three line',
-	};
-
-	const noOfLinesMap: Record<string, number> = {
-		'one line': 1,
-		'two line': 2,
-		'three line': 3,
-	};
 
 	function getArrayByLength(length: number) {
 		return Array.from({ length }, (_, i) => stringOfNumbers[i + 1]);
@@ -95,13 +107,16 @@ function NeonBilder() {
 
 		return total;
 	}, [accessories]);
+
 	const customStyles: CustomStyles = {
 		'--neon-color': color.hex,
 		fontSize: `${fontSize}px`,
 	};
+
 	return (
-		<div className='grid grid-cols-2 gap-8'>
-			<div className='relative rounded overflow-hidden shadow-lg'>
+		<div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+			{/* Visuallizer */}
+			<div className='relative rounded overflow-hidden shadow-lg self-start'>
 				<img
 					src={empty_wall}
 					alt='empty wall'
@@ -112,12 +127,7 @@ function NeonBilder() {
 						<div
 							className='flex flex-col w-full'
 							style={{
-								textAlign:
-									(alignment.label as
-										| 'left'
-										| 'right'
-										| 'center'
-										| 'justify') || 'center',
+								textAlign: (alignment.label as AlignText) || 'center',
 							}}
 						>
 							{Object.keys(contentText).map((item, index) => (
@@ -134,47 +144,12 @@ function NeonBilder() {
 				</div>
 				<div className='absolute bottom-0 left-0'>
 					<CenteredOverlay className='w-full max-w-[180px]'>
-						<div className='p-2 bg-black text-white rounded-2xl'>
-							<div className='flex gap-2 justify-between'>
-								<h6 className='text-xs'>Price</h6>
-								<h6 className='text-xs'>$123</h6>
-							</div>
-							<div className='flex gap-2 justify-between'>
-								<h6 className='text-xs'>Delivery Date</h6>
-								<h6 className='text-xs'>3-2-3432</h6>
-							</div>
-							<p className='text-[10px]'>
-								Standard Delivery (15 Days) FREE Rush Order Delivery (8 Days)
-								+50$
-							</p>
-							<button
-								className='w-full bg-primary-400 rounded-full py-1 font-medium hover:bg-primary-600 mt-4'
-								type='submit'
-							>
-								BUY
-							</button>
-						</div>
+						<CurrentPricingCard />
 					</CenteredOverlay>
 				</div>
-
-				{/*!! photo credit */}
-				{/* <span className="inline-block w-full p-2 text-sm ">
-          Photo by
-          <a
-            className="hover:underline text-primary-500"
-            href="https://unsplash.com/@brandsandpeople?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-          >
-            Brands&People
-          </a>
-          on
-          <a
-            className="hover:underline text-primary-500"
-            href="https://unsplash.com/photos/white-wooden-fence-near-white-wall-dwySHxLsofc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-          >
-            Unsplash
-          </a>
-        </span> */}
 			</div>
+
+			{/* Controller */}
 			<div className='w-full flex flex-col gap-6'>
 				<ToggleSelector
 					options={noOfLinesOptions}
@@ -244,18 +219,21 @@ function NeonBilder() {
 							setaccessories(selectedAccessories)
 						}
 					/>
-					<div>
-						<div className='w-full flex bg-slate-200 rounded-lg justify-between items-center px-4 mt-8'>
-							<p>Total:</p>
-							<h6 className='pt-2'>${totalPrice}</h6>
-						</div>
-						<button
-							className='bg-primary-400 w-full rounded-full p-3 text-white mt-4'
-							type='submit'
-						>
-							Add to Cart
-						</button>
+				</div>
+				<div>
+					<PremiumNeon/>
+				</div>
+				<div>
+					<div className='w-full flex bg-slate-200 rounded-lg justify-between items-center px-4 mt-8'>
+						<p>Total:</p>
+						<h6 className='pt-2'>${totalPrice}</h6>
 					</div>
+					<button
+						className='bg-primary-400 w-full rounded-full p-3 text-white mt-4'
+						type='submit'
+					>
+						Add to Cart
+					</button>
 				</div>
 			</div>
 		</div>

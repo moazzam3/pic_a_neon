@@ -3,9 +3,9 @@
 function ImageGallery() {
 	return (
 		<>
-			<h3 className='text-black text-center sections-title accent-underline'>
+			<h2 className='text-black text-center sections-title accent-underline'>
 				Popular neon signs
-			</h3>
+			</h2>
 			<div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
 				<div className='grid gap-4'>
 					<div>

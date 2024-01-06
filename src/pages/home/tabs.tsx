@@ -34,7 +34,7 @@ const Tabs = () => {
 	return (
 		<>
 			<div className='text-center'>
-				<h3 className='text-primary-main accent-underline'>Best Seller</h3>
+				<h2 className='sections-title accent-underline'>Best Seller</h2>
 			</div>
 			<Tab.Group as='div' className='w-full'>
 				<div className='w-full'>
