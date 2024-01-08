@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 // project imports
 import logo from 'src/assets/Logo.png';
 import IconButton from 'src/components/IconButton';
+import useCart from 'src/cart/hooks';
+import navlinks from 'src/constants/navlinks';
 
 // icons
 import { IconShoppingBag, IconMenu2, IconX } from '@tabler/icons-react';
@@ -17,6 +19,9 @@ import { pages } from 'src/constants/page_routes';
 function Topbar() {
 	const [open, setOpen] = useState<boolean>(false);
 	const toggleOpen = () => setOpen(!open);
+
+	// cart
+	const { openCart } = useCart();
 	return (
 		<header className='bg-black text-white sticky top-0 z-50'>
 			<div className='relative w-full h-full px-4 md:px-6 lg:px-10'>
@@ -72,12 +77,16 @@ function Topbar() {
 						{/* </NavLink> */}
 						<ul className='flex items-center justify-center space-x-6 uppercase'>
 							<li>
-								<a
-									className='animated-underline after:bg-primary-500'
-									href='#home'
+								<NavLink
+									className={({ isActive }) =>
+										`animated-underline after:bg-primary-500 ${
+											isActive && 'active'
+										}`
+									}
+									to={pages.shop}
 								>
 									Shop
-								</a>
+								</NavLink>
 							</li>
 							<li>
 								<SolutionsMenu />
@@ -93,7 +102,7 @@ function Topbar() {
 						</ul>
 					</div>
 					<div className='flex items-center gap-2'>
-						<IconButton>
+						<IconButton onClick={openCart}>
 							<IconShoppingBag className='h-6 w-6' />
 						</IconButton>
 					</div>
@@ -131,56 +140,25 @@ function Topbar() {
 						open ? 'translate-x-0' : '-translate-x-full'
 					}`}
 				>
-					{/* divider */}
 					<ul className='mt-4 flex flex-col justify-center space-y-6 uppercase px-10 text-lg'>
-						<li>
-							<NavLink
-								className={({ isActive }) =>
-									`animated-underline after:bg-primary-500 ${
-										isActive && 'active'
-									}`
-								}
-								to={pages.home}
-							>
-								Home
-							</NavLink>
-						</li>
-						<li>
-							<NavLink
-								className={({ isActive }) =>
-									`animated-underline after:bg-primary-500 ${
-										isActive && 'active'
-									}`
-								}
-								to={pages.getaquote + '/Get A Quote'}
-							>
-								get a quote
-							</NavLink>
-						</li>
-						<li>
-							<a
-								className='animated-underline after:bg-primary-500'
-								href='#design'
-							>
-								Design your own neon
-							</a>
-						</li>
-						<li>
-							<a
-								className='animated-underline after:bg-primary-500'
-								href='#home'
-							>
-								Shop
-							</a>
-						</li>
-						<li>
-							<NavLink
-								className='animated-underline after:bg-primary-500'
-								to={pages.getaquote + '/Outdoor Sign'}
-							>
-								outdoor sign
-							</NavLink>
-						</li>
+						{navlinks.map((navlink) => {
+							const { label, path, queryParam } = navlink;
+							const to = queryParam ? `${path}/${queryParam}` : path;
+							return (
+								<li key={label}>
+									<NavLink
+										className={({ isActive }) =>
+											`animated-underline after:bg-primary-500 ${
+												isActive && 'active'
+											}`
+										}
+										to={to}
+									>
+										{label}
+									</NavLink>
+								</li>
+							);
+						})}
 					</ul>
 				</div>
 			</div>
@@ -270,6 +248,7 @@ const RightPanel: Link[] = [
 		href: '#',
 	},
 ];
+
 function SolutionsMenu() {
 	return (
 		<Popover className='relative'>

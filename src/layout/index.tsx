@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from 'react';
+
 // components
 import Topbar from './topbar';
 import Footer from './footer';
 import JumpToTop from './jumpToTop';
-
 
 const Layout = ({ children }: { children: ReactNode }) => {
 	const [isScrolled, setIsScrolled] = useState(false);
@@ -19,7 +19,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 		window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
-	
+
 	return (
 		<div className='relative'>
 			<Topbar />

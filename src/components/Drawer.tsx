@@ -56,24 +56,19 @@ function Drawer(props: DrawerProps): ReactElement {
 	return (
 		<>
 			{open && (
-				<>
-					<div
-						className='fixed z-[1300] inset-0 bg-gray-500/2 transition-opacity duration-300 ease-in-out'
-						onClick={onClose}
-						style={{
-							backdropFilter: 'blur(10px)',
-							WebkitBackdropFilter: 'blur(10px)',
-						}}
-					></div>
-					<div
-						className='fixed right-0 top-0 bottom-0 bg-red-500 transform transition-transform duration-300 ease-out'
-						style={{ transform: open ? 'translateX(0)' : 'translateX(100%)' }}
-						ref={drawerRef}
-					>
-						{children}
-					</div>
-				</>
+				<div
+					className='fixed z-[1300] inset-0 bg-black/40 transition-opacity duration-300 ease-in-out'
+					onClick={onClose}
+				></div>
 			)}
+			<div
+				className={`fixed right-0 top-0 bottom-0 z-[10000] bg-white transform transition-transform duration-300 ease-out ${
+					open ? 'translate-x-0' : 'translate-x-full'
+				}`}
+				ref={drawerRef}
+			>
+				{children}
+			</div>
 		</>
 	);
 }
