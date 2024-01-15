@@ -1,12 +1,12 @@
 import { pages } from './page_routes';
 
-interface Navlink {
+export interface NavLinkType {
 	label: string;
   path: string;
   queryParam?: string;
 }
 
-const navlinks: Navlink[] = [
+const navlinks: NavLinkType[] = [
 	{
 		label: 'Home',
 		path: '/',

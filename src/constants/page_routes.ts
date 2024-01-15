@@ -4,5 +4,6 @@ export const pages = {
   neon_builder: '/neon_builder',
   collections: '/collections',
   outdoorSign:'/outdoorSign',
-  shop: '/shop'
+  shop: '/shop',
+  productDetails:'/productDetails',
 };
