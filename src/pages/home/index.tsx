@@ -11,11 +11,12 @@ import SocialLinks from './socialLinks';
 function Home() {
 	return (
 		<div className='flex flex-col'>
+			<DiscountOffer/>
 			<section>
 				<Hero />
 			</section>
 			<section className='max-container'>
-				<div className='px-8 lg:px-0 py-8 sm:py-12 md:py-16 xl:py-24 flex flex-col gap-8'>
+				<div className='px-8 lg:px-0 py-8 sm:py-12 md:py-16 xl:py-24 flex flex-col gap-12'>
 					<Description />
 					<Cards />
 				</div>
@@ -50,3 +51,9 @@ function Home() {
 }
 
 export default Home;
+
+function DiscountOffer() {
+	return <div className='flex p-4 bg-primary-500 text-white text-2xl font-semibold w-fit fixed top-1/2 right-0 rotate-90 z-50 rounded-b-xl translate-x-1/3'>
+		<p>Get 10% off</p>
+	</div>
+}

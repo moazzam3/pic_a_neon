@@ -91,6 +91,9 @@ input[type="range"]::-moz-range-thumb {
 	.sections-title {
 		@apply font-rubik text-2xl lg:text-4xl leading-none;
 	}
+	.gradient-primary{
+		background: radial-gradient(circle, rgb(255, 136, 220) 0%, rgb(255, 136, 220) 0%, rgb(255, 136, 220) 2%, rgba(255, 136, 220, 0.937) 3%, rgb(255, 136, 220) 22%, rgb(255, 136, 220) 40%, rgb(255, 166, 229) 52%, rgb(255, 255, 255))
+	}
 	.padding {
 		@apply sm:px-16 px-8 sm:py-24 py-12;
 	}
@@ -121,6 +124,9 @@ input[type="range"]::-moz-range-thumb {
 
 	.info-text {
 		@apply font-montserrat text-slate-gray text-lg leading-7;
+	}
+	.range-slider .range-slider__range{
+		@apply bg-primary-500
 	}
 }
 @layer base {
@@ -164,4 +170,31 @@ input[type="range"]::-moz-range-thumb {
 	h6 {
 		@apply text-sm md:text-base lg:text-lg xl:text-xl; /* Adjust sizes as needed */
 	}
+	.pagination a {
+		@apply border rounded h-6 w-6 aspect-square flex items-center justify-center;
+	}
+	.pagination a:hover{
+		@apply border rounded h-6 w-6 aspect-square flex items-center justify-center bg-primary-500 text-white;
+	}
+	.active-pagination{
+		@apply border rounded h-6 w-6 aspect-square flex items-center justify-center bg-primary-500 text-white;
+	}
 }
+
+@keyframes wavy {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-wavy {
+  animation: wavy 1.5s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(67, 65, 65, 0.7), transparent);
+}
+

@@ -15,7 +15,6 @@ const RangeSelector: React.FC<RangeSelectorProps> = (props: RangeSelectorProps) 
 	const [range, setRange] = useState<number[]>(initialValue);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    console.log(event.target.value)
 		const newValue = parseFloat(event.target.value);
 		const newRange = [...range];
 		newRange[index] = newValue;

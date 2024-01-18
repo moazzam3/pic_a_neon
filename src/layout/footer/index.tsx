@@ -1,10 +1,24 @@
 import { ReactElement } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // assets
 import logo from 'src/assets/Logo.png';
 import { IconPhone, IconMail } from '@tabler/icons-react';
 
+// project files
+import { getFooter } from 'src/constants/services';
+import axios from 'src/utils/axios';
+import Skeleton from 'src/components/Skeleton';
+
 function Footer(): ReactElement {
+	const { isPending, data } = useQuery({
+		queryKey: ['footer'],
+		queryFn: async () => {
+			const response = await axios.get(getFooter);
+			return response.data;
+		},
+	});
+
 	const pagesLinks = [
 		{
 			label: 'About Us',
@@ -82,26 +96,36 @@ function Footer(): ReactElement {
 						</ul>
 						<ul className='w-full flex flex-col space-y-2 text-error-500'>
 							<li className='w-fit text-slate-200'>Contact info</li>
-							<li className='flex items-center gap-1'>
-								<IconPhone />
-								<span className='animated-underline after:bg-error-500'>
-									<a href='tel:1-800-123-4567'>1-800-123-4567</a>
-								</span>
-							</li>
-							<li className='flex items-center gap-1'>
-								<IconMail />
-								<span className='animated-underline after:bg-error-500'>
-									<a href='mailto:picaneon@gmail.com'>picaneon@gmail.com</a>
-								</span>
-							</li>
+							{isPending ? (
+								<Skeleton className='h-5 w-[200px]' />
+							) : (
+								<li className='flex items-center gap-1'>
+									<IconPhone />
+									<span className='animated-underline after:bg-error-500'>
+										<a href={`tel:${data?.links.number}`}>1-800-123-4567</a>
+									</span>
+								</li>
+							)}
+							{isPending ? (
+								<Skeleton className='h-5 w-[200px]' />
+							) : (
+								<li className='flex items-center gap-1'>
+									<IconMail />
+									<span className='animated-underline after:bg-error-500'>
+										<a href='mailto:picaneon@gmail.com'>picaneon@gmail.com</a>
+									</span>
+								</li>
+							)}
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div className='mt-16 pb-4 flex justify-center items-center'>
-				<p className='text-slate-200'>
-					Copyright © 2018-2022 Pick A Neon®, All rights reserved.
-				</p>
+				{isPending ? (
+					<Skeleton className='h-6 max-w-md mx-auto w-full' />
+				) : (
+					<p className='text-slate-200'>{data?.links.copy_rights}</p>
+				)}
 			</div>
 		</footer>
 	);

@@ -1,12 +1,10 @@
+import {Link } from 'react-router-dom'
 // components
 import Button from 'src/components/Button';
-import IconButton from 'src/components/IconButton';
-
-// icons
-import { IconShoppingBag } from '@tabler/icons-react';
 
 // assets
 import heroVideo from 'src/assets/demo.mp4';
+import { pages } from 'src/constants/page_routes';
 
 const Hero = () => {
 	return (
@@ -28,14 +26,11 @@ const Hero = () => {
 						</span>{' '}
 						LED neon sign
 					</h1>
-					<div className='flex gap-4 justify-center'>
-						<Button variant='outlined'>Design Your Own Neon</Button>
-						<IconButton className='sm:hidden' color='primary'>
-							<IconShoppingBag className='h-6 w-6' />
-						</IconButton>
-						<Button
-							variant='contained'
-						>
+					<div className='flex max-sm:flex-col gap-4 justify-center'>
+						<Button variant='outlined' Link LinkComponent={Link} to={pages.neon_builder} className='hover:bg-primary-500 hover:text-white transition-colors'>
+							Design Your Own Neon
+						</Button>
+						<Button Link variant='contained' LinkComponent={Link} to={pages.shop}>
 							Shop Now
 						</Button>
 					</div>
