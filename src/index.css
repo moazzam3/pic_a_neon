@@ -177,7 +177,10 @@ input[type="range"]::-moz-range-thumb {
 		@apply border rounded h-6 w-6 aspect-square flex items-center justify-center bg-primary-500 text-white;
 	}
 	.active-pagination{
-		@apply border rounded h-6 w-6 aspect-square flex items-center justify-center bg-primary-500 text-white;
+		@apply flex items-center justify-center h-10 w-10 aspect-square rounded-lg bg-primary-500 text-white hover:bg-primary-500 border-primary-500;
+	}
+	.pagination-link{
+		@apply flex items-center justify-center h-10 w-10 aspect-square rounded-lg border hover:bg-slate-100 hover:text-black;
 	}
 }
 

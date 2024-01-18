@@ -2,10 +2,12 @@ import { InputHTMLAttributes, ReactElement } from 'react';
 
 interface ToggleSelectorProps {
 	options: string[];
-	selected: string;
-	setSelected: (selected: string) => void;
+	selected: any;
+	setSelected: (selected: any) => void;
 	variant?: 'buttoned' | 'tabed';
-	containerClass?: string;
+	className?: string;
+	optionToDeselect?: boolean;
+	detailedObjects?:boolean
 }
 function ToggleSelector(props: ToggleSelectorProps): ReactElement {
 	const {
@@ -13,10 +15,15 @@ function ToggleSelector(props: ToggleSelectorProps): ReactElement {
 		selected,
 		setSelected,
 		variant = 'buttoned',
-		containerClass,
+		className,
+		optionToDeselect,
 	} = props;
 
 	function handleSetSelected(value: string) {
+		if (optionToDeselect && value === selected) {
+			setSelected('');
+			return;
+		}
 		setSelected(value);
 	}
 
@@ -25,31 +32,33 @@ function ToggleSelector(props: ToggleSelectorProps): ReactElement {
 			? 'w-full flex flex-wrap gap-2'
 			: 'w-full flex flex-wrap py-3 px-4 rounded-full bg-black';
 	}
-	function getRadioClass(checked: boolean) {
-		return variant === 'buttoned'
-			? `border px-4 py-2 rounded-md transition-colors cursor-pointer ${
-					checked
-						? 'border-primary-500 text-primary-500'
-						: 'border-black text-black'
-			}`
-			: `text-white rounded-full cursor-pointer flex flex-1 w-full p-4 transition-colors justify-center hover:text-white hover:bg-primary-500 ${
-					checked ? 'bg-primary-500 hover:text-white' : 'bg-transparent'
-			}`;
-	}
+
 	return (
 		<div
 			className={
-				getContainerClass() + ' ' + 'overflow-hidden' + ' ' + containerClass
+				getContainerClass() + ' ' + 'overflow-hidden' + ' ' + className
 			}
 		>
 			{options.map((item) => (
 				<RadioButton
-					radioClass={getRadioClass(item === selected)}
+					className={`${
+						variant === 'buttoned'
+							? `border px-4 py-2 rounded-md transition-colors cursor-pointer ${
+									item === selected
+										? 'bg-primary-500 text-white border-primary-500 hover:text-white'
+										: 'border-slate-400 text-slate-500 hover:border-primary-500 hover:text-primary-500'
+							}`
+							: `text-white rounded-full cursor-pointer flex flex-1 w-full p-4 transition-colors justify-center hover:text-white hover:bg-primary-500 ${
+									item === selected
+										? 'bg-primary-500 hover:text-white'
+										: 'bg-transparent'
+							}`
+					}`}
 					key={item}
 					checked={item === selected}
 					onChange={() => handleSetSelected(item)}
 				>
-					<span className='whitespace-nowrap'>{item}</span>
+					<span>{item}</span>
 				</RadioButton>
 			))}
 		</div>
@@ -61,18 +70,18 @@ export default ToggleSelector;
 interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
 	checked: boolean;
 	children: ReactElement | string;
-	radioClass: string;
+	className: string;
 }
 
 function RadioButton(props: RadioButtonProps): ReactElement {
-	const { checked, children, className, radioClass, ...rest } = props;
+	const { checked, children, className, ...rest } = props;
 
 	return (
-		<label className={radioClass}>
+		<label className={className} onClick={()=>window.scrollTo(0, window.scrollY)}>
 			<input
 				type='radio'
 				checked={checked}
-				className={`visually-hidden ${className}`}
+				className={`visually-hidden whitespace-nowrap`}
 				{...rest}
 			/>
 			{children}

@@ -17,69 +17,8 @@ import { pages } from 'src/constants/page_routes';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { IconInfoTriangle } from '@tabler/icons-react';
 import useCart from 'src/cart/hooks';
+import { colors } from 'src/constants/neon_builder';
 
-const colors: Color[] = [
-	{
-		id: '1',
-		name: 'red',
-		hex: '#ff0000',
-	},
-	{
-		id: '2',
-		name: 'green',
-		hex: '#00ff00',
-	},
-	{
-		id: '6',
-		name: 'pink',
-		hex: '#ff00ff',
-	},
-	{
-		id: '7',
-		name: 'white',
-		hex: '#C0C0C0',
-	},
-	{
-		id: '4',
-		name: 'yellow',
-		hex: '#fbf25d',
-	},
-	{
-		id: '9',
-		hex: '#ffbc4b',
-		name: 'orange',
-	},
-	{
-		id: '10',
-		hex: '#1c1ef4',
-		name: 'blue',
-	},
-	{
-		id: '11',
-		hex: '#ff94ff',
-		name: 'cotton',
-	},
-	{
-		id: '12',
-		hex: '#8be8ea',
-		name: 'mint',
-	},
-	{
-		id: '13',
-		hex: '#8ee0ff',
-		name: 'Ice blue',
-	},
-	{
-		id: '14',
-		hex: '#c35fe9',
-		name: 'Purple',
-	},
-	{
-		id: '15',
-		hex: '#fe69bf',
-		name: 'deep',
-	},
-];
 
 function ProductDetails() {
 	const navigate = useNavigate();
@@ -90,7 +29,7 @@ function ProductDetails() {
 	});
 	const { id } = useParams();
 
-	const { openCart } = useCart()
+	const { openCart, addToCart } = useCart()
 
 	const { data, isPending } = useQuery({
 		queryKey: ['productDetails', id],
@@ -102,7 +41,12 @@ function ProductDetails() {
 	useEffect(() => {
 		window.scrollTo(0, 96);
 	}, [])
-	
+
+	const handleAddToCart = ( product: any) => {
+		addToCart(product);
+		openCart();
+	};
+
 	if (isPending) {
 		return (
 			<div className='max-container'>
@@ -166,7 +110,7 @@ function ProductDetails() {
 						<Button
 							variant='outlined'
 							className='hover:bg-primary-500 hover:text-white transition-colors'
-							onClick={openCart}
+							onClick={()=>handleAddToCart({...data?.products,quantity:1})}
 						>
 							Add to cart
 						</Button>

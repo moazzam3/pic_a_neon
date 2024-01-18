@@ -1,4 +1,4 @@
-import { LabelHTMLAttributes, ReactElement } from 'react';
+import { LabelHTMLAttributes, ReactElement, useEffect } from 'react';
 // icons
 import { IconBolt } from '@tabler/icons-react';
 
@@ -16,6 +16,9 @@ interface ColorSelectorProps {
 
 function ColorSelector(props: ColorSelectorProps): ReactElement {
 	const { options, value, onChange } = props;
+	useEffect(() => {
+		onChange(options[0]);
+	}, []);
 	return (
 		<div className='flex items-center flex-wrap gap-4'>
 			{options.map((item) => (
