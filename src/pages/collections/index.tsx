@@ -1,17 +1,20 @@
-import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useParams, Link } from 'react-router-dom';
 
 // project
 import axios from 'src/utils/axios';
 import { categoricProducts } from 'src/constants/services';
 import config from 'src/config';
-import IconButton from 'src/components/IconButton';
+
 // assets
 import { IconGardenCart } from '@tabler/icons-react';
 import { useEffect } from 'react';
+import { pages } from 'src/constants/page_routes';
+import useCart from 'src/cart/hooks';
 
 function Collections() {
 	const { id } = useParams<{ id: string }>();
+	const { addToCart, openCart } = useCart();
 	const { data, isPending } = useQuery({
 		queryKey: ['collections', id],
 		queryFn: async () => {
@@ -24,6 +27,11 @@ function Collections() {
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
+	const handleAddToCart = ( event: React.MouseEvent<HTMLButtonElement>, product: any) => {
+		event.preventDefault();
+		addToCart(product);
+		openCart();
+	};
 	return (
 		<div className='max-container'>
 			<h1 className='capitalize text-2xl md:text-3xl lg:text-4xl text-center mt-8 text-primary-500'>
@@ -51,12 +59,13 @@ function Collections() {
 				<section className='flex gap-3 flex-wrap items-center justify-center'>
 					{data?.products[0].products.map((product) => {
 						return (
-							<div
+							<Link
+								to={pages.productDetails + `/${product.slug}`}
 								key={product.id}
-								className='flex flex-col gap-4 rounded-lg shadow-xl'
+								className='flex flex-col gap-4 rounded-lg shadow-xl min-w-[300px]'
 							>
-								<div className='bg-common-white w-fit p-4'>
-									<div className='rounded-lg overflow-hidden'>
+								<div className='bg-common-white p-4'>
+									<div className='flex justify-center rounded-lg overflow-hidden'>
 										<img
 											src={config.imageBaseURL + product.image_path}
 											height={300}
@@ -71,13 +80,16 @@ function Collections() {
 									</h3>
 									<div className=' flex items-center justify-between my-4'>
 										<p className='text-primary-500'>${product.price}</p>
-										{/* <IconButton color='primary' className='hover:bg-gray-500/10 transition-colors ease-in'>
+										<button
+											className='flex gap-1 items-center p-1 border hover:bg-gray-400/25 rounded transition-colors duration-150 ease-in'
+											onClick={(event) => handleAddToCart(event, {...product,quantity:1})}
+										>
 											<IconGardenCart />
-										</IconButton> */}
-										<button className='flex gap-1 items-center p-1 hover:bg-gray-400/25 rounded transition-colors duration-150 ease-in'><IconGardenCart /><span>add to cart</span></button>
+											<span>add to cart</span>
+										</button>
 									</div>
 								</div>
-							</div>
+							</Link>
 						);
 					})}
 				</section>

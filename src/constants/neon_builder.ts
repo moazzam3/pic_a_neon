@@ -21,44 +21,64 @@ export const fonts: string[] = [
 
 export const colors: Color[] = [
 	{
-		name: 'Red',
-		hex: '#FF0000',
-		id: 'red',
+		id: '6',
+		name: 'pink',
+		hex: '#ff00ff',
 	},
 	{
-		name: 'Green',
-		hex: '#00FF00',
-		id: 'green',
+		id: '1',
+		name: 'red',
+		hex: '#ff0000',
 	},
 	{
-		name: 'Blue',
-		hex: '#0000FF',
-		id: 'blue',
+		id: '2',
+		name: 'green',
+		hex: '#00ff00',
 	},
 	{
-		name: 'Yellow',
-		hex: '#FFFF00',
-		id: 'yellow',
+		id: '7',
+		name: 'white',
+		hex: '#C0C0C0',
 	},
 	{
-		name: 'Cyan',
-		hex: '#00FFFF',
-		id: 'cyan',
+		id: '4',
+		name: 'yellow',
+		hex: '#fbf25d',
 	},
 	{
-		name: 'Magenta',
-		hex: '#FF00FF',
-		id: 'magenta',
+		id: '9',
+		hex: '#ffbc4b',
+		name: 'orange',
 	},
 	{
-		name: 'White',
-		hex: '#FFFFFF',
-		id: 'white',
+		id: '10',
+		hex: '#1c1ef4',
+		name: 'blue',
 	},
 	{
-		name: 'Black',
-		hex: '#000000',
-		id: 'black',
+		id: '11',
+		hex: '#ff94ff',
+		name: 'cotton',
+	},
+	{
+		id: '12',
+		hex: '#8be8ea',
+		name: 'mint',
+	},
+	{
+		id: '13',
+		hex: '#8ee0ff',
+		name: 'Ice blue',
+	},
+	{
+		id: '14',
+		hex: '#c35fe9',
+		name: 'Purple',
+	},
+	{
+		id: '15',
+		hex: '#fe69bf',
+		name: 'deep',
 	},
 ];
 
@@ -85,4 +105,16 @@ export const accessoryKit: Accessory[] = [
 	},
 ];
 
+export const neonSizeOptions: string[] = [
+	'small',
+	'medium',
+	'large',
+	'extra large',
+]
+
+export const backgroundOptions: string[] = [
+	'cut to shape',
+	'cut to lettering',
+	'cut to square',
+];
 export const noOfLinesOptions: string[] = ['one line', 'two line', 'three line'];

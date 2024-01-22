@@ -1,9 +1,9 @@
-function CurrentPricingCard() {
+function CurrentPricingCard({price}: {price: number}) {
 	return (
 		<div className='p-2 bg-black text-white rounded-2xl'>
 			<div className='flex gap-2 justify-between'>
 				<h6 className='text-xs'>Price</h6>
-				<h6 className='text-xs'>$123</h6>
+				<h6 className='text-xs'>${price}</h6>
 			</div>
 			<div className='flex gap-2 justify-between'>
 				<h6 className='text-xs'>Delivery Date</h6>

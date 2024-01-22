@@ -76,9 +76,9 @@ function ImageGallery() {
 				{arrayOfFourElements.map((chunk: any, index: number) => (
 					<div key={index} className='grid gap-4'>
 						{chunk.map((product: any) => (
-							<Link to={pages.productDetails + `/${product.slug}`} key={product.id}>
+							<Link to={pages.productDetails + `/${product.slug}`} key={product.id} className='border overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-shadow duration-200'>
 								<img
-									className='h-auto max-w-full rounded-lg shadow-md hover:shadow-2xl transition-shadow duration-200'
+									className='h-auto max-w-full'
 									src={config.imageBaseURL + product.image_path}
 									alt={product.name}
 								/>
@@ -98,6 +98,7 @@ function ImageGallery() {
 					onPageChange={handlePageClick}
 					containerClassName={'flex gap-2'}
 					activeClassName={'active-pagination'}
+					pageLinkClassName='pagination-link'
 				/>
 			</div>
 		</>
