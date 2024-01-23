@@ -5,5 +5,7 @@ export const pages = {
   collections: '/collections',
   outdoorSign:'/outdoorSign',
   shop: '/shop',
-  productDetails:'/productDetails',
+  checkout:'/checkout',
+  productDetails: '/productDetails',
+  thankyou:'thankyou'
 };

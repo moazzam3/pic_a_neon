@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
+
 // components
 import Drawer from 'src/components/Drawer';
 import useCart from './hooks';
 import IconButton from 'src/components/IconButton';
-import { Link } from 'react-router-dom';
 import { pages } from 'src/constants/page_routes';
 import config from 'src/config';
 
@@ -31,6 +32,8 @@ function Cart() {
 			return acc + item.price * item.quantity;
 		}, 0);
 	}, [cartItems]);
+
+	console.log('cartItems', cartItems);
 	return (
 		<Drawer open={displayCart} onClose={closeCart}>
 			<div className='h-screen'>
@@ -56,7 +59,10 @@ function Cart() {
 					<div className='h-[65vh] px-4 border-b border-b-gray-200 overflow-auto w-full'>
 						{cartItems.map((item) => {
 							return (
-								<div key={item.id} className='flex items-center w-full max-w-xs'>
+								<div
+									key={item.id}
+									className='flex items-center w-full max-w-xs'
+								>
 									<div className='w-[30%]'>
 										<img
 											height={100}
@@ -103,7 +109,13 @@ function Cart() {
 								<p>${total}</p>
 							</div>
 						</div>
-						<Button fullWidth variant='contained'>
+						<Button
+							fullWidth
+							variant='contained'
+							Link
+							LinkComponent={Link}
+							to={pages.checkout}
+						>
 							Checkout
 						</Button>
 					</div>

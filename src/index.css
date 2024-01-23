@@ -182,6 +182,9 @@ input[type="range"]::-moz-range-thumb {
 	.pagination-link{
 		@apply flex items-center justify-center h-10 w-10 aspect-square rounded-lg border hover:bg-slate-100 hover:text-black;
 	}
+	.badge{
+		@apply after:content-[""] after:absolute after:bottom-0 after:right-0 after:-translate-y-full after:-translate-x-full after:inline-flex after:items-center after:justify-center after:h-3 after:w-3 after:aspect-square after:rounded-full after:bg-primary-500 after:text-white;
+	}
 }
 
 @keyframes wavy {

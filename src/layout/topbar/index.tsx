@@ -25,7 +25,7 @@ function Topbar() {
 	const toggleOpen = () => setOpen(!open);
 
 	// cart
-	const { openCart } = useCart();
+	const { openCart,cartItems } = useCart();
 
 	const { data, isPending } = useQuery({
 		queryKey: ['menu'],
@@ -188,7 +188,7 @@ function Topbar() {
 						{/* </a> */}
 					</div>
 					<div className='flex items-center gap-2'>
-						<IconButton aria-label='Shopping Bag'>
+						<IconButton aria-label='Shopping Bag' enableBadge>
 							<IconShoppingBag className='h-6 w-6' />
 						</IconButton>
 					</div>
