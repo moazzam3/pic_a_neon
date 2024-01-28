@@ -58,7 +58,6 @@ function CheckoutForm() {
 	};
 
 	function getPayload() {
-		console.log('cartItems', cartItems);
 		return cartItems.map((items) => {
 			return {
 				product_id: item.id,

@@ -13,6 +13,7 @@ import { pages } from 'src/constants/page_routes';
 import useCart from 'src/cart/hooks';
 import ToggleSelector from 'src/components/ToggleSelector';
 import Button from 'src/components/Button';
+import { CartItem } from 'src/cart/cartContext';
 
 function Collections() {
 	const { id } = useParams<{ id: string }>();
@@ -32,7 +33,7 @@ function Collections() {
 	}, []);
 	const handleAddToCart = (
 		event: React.MouseEvent<HTMLButtonElement>,
-		product: any
+		product: CartItem
 	) => {
 		event.preventDefault();
 		addToCart(product);
@@ -64,7 +65,7 @@ function Collections() {
 				</div>
 			) : (
 				<section className='flex gap-3 flex-wrap items-center justify-center'>
-					{data?.products[0].products.map((product) => {
+					{data?.products[0].products.map((product:CartItem) => {
 						return (
 							<Link
 								to={pages.productDetails + `/${product.slug}`}

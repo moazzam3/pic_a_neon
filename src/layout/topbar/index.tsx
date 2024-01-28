@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 // 3rd party libraries
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 // project imports
 import logo from 'src/assets/Logo.png';
 import IconButton from 'src/components/IconButton';
 import useCart from 'src/cart/hooks';
-import {NavLinkType} from 'src/constants/navlinks';
+import { NavLinkType } from 'src/constants/navlinks';
 import { getMenu } from 'src/constants/services';
 import axios from 'src/utils/axios';
 import Skeleton from 'src/components/Skeleton';
@@ -25,7 +25,7 @@ function Topbar() {
 	const toggleOpen = () => setOpen(!open);
 
 	// cart
-	const { openCart,cartItems } = useCart();
+	const { openCart, cartItems } = useCart();
 
 	const { data, isPending } = useQuery({
 		queryKey: ['menu'],
@@ -34,34 +34,34 @@ function Topbar() {
 			return response.data;
 		},
 	});
-	
+
 	const navlinks: NavLinkType[] = [
 		{
 			label: data?.menus.title1 || 'home',
 			path: pages.home,
 		},
 		{
-			label:  data?.menus.title2 || 'get a quote',
+			label: data?.menus.title2 || 'get a quote',
 			path: pages.getaquote,
 			queryParam: 'get a quote',
 		},
 		{
-			label:  data?.menus.title3 || 'neon builder',
+			label: data?.menus.title3 || 'neon builder',
 			path: pages.neon_builder,
 		},
 		{
-			label:  data?.menus.title4 || 'shop',
+			label: data?.menus.title4 || 'shop',
 			path: pages.shop,
 		},
 		{
-			label:  data?.menus.title6 || 'outdoor sign',
+			label: data?.menus.title6 || 'outdoor sign',
 			path: pages.outdoorSign,
 			queryParam: 'outdoor sign',
 		},
 	];
 	return (
 		<header className='bg-black text-white sticky top-0 z-50'>
-			<TopMessage/>
+			<TopMessage />
 			<div className='relative w-full h-full px-4 md:px-6 lg:px-10'>
 				{/* wide screen nav */}
 				<nav className='min-h-[80px] items-center justify-between hidden xl:flex'>
@@ -123,7 +123,9 @@ function Topbar() {
 						}
 						to={pages.home}
 					> */}
-						<img src={logo} alt='logo' className='w-40' />
+						<Link to={pages.home}>
+							<img src={logo} alt='logo' className='w-40' />
+						</Link>
 						{/* </NavLink> */}
 						<ul className='flex items-center justify-center space-x-6 uppercase'>
 							<li>
@@ -184,7 +186,9 @@ function Topbar() {
 					</IconButton>
 					<div>
 						{/* <a href='#logo' className='flex items-center justify-center'> */}
-						<img src={logo} alt='logo' className='w-40' />
+						<Link to={pages.home}>
+							<img src={logo} alt='logo' className='w-40' />
+						</Link>
 						{/* </a> */}
 					</div>
 					<div className='flex items-center gap-2'>
@@ -209,7 +213,9 @@ function Topbar() {
 							return (
 								<li key={label}>
 									{isPending ? (
-										<Skeleton className='h-6 w-28' />):(<NavLink
+										<Skeleton className='h-6 w-28' />
+									) : (
+										<NavLink
 											className={({ isActive }) =>
 												`animated-underline after:bg-primary-500 ${
 													isActive && 'active'
@@ -218,8 +224,8 @@ function Topbar() {
 											to={to}
 										>
 											{label}
-										</NavLink>)}
-									
+										</NavLink>
+									)}
 								</li>
 							);
 						})}
@@ -231,4 +237,3 @@ function Topbar() {
 }
 
 export default Topbar;
-

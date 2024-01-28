@@ -7,14 +7,14 @@ export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
 	enableBadge?: boolean;
 }
 
-function IconButton({ color, children,enableBadge, ...rest }: IconButtonProps) {
+function IconButton({ color, children,enableBadge, className, ...rest }: IconButtonProps) {
 	return (
 		<button
 			className={`inline-flex p-3 items-center justify-center rounded-full hover:bg-slate-50/10 relative ${
 				color === 'white' || color === 'black'
 					? `text-${color}`
 					: `text-${color}-500'`
-        } ${enableBadge ? 'badge' : ''}`}
+        } ${enableBadge ? 'badge' : ''} ${className}`}
       {...rest}
 		>
 			{children}
