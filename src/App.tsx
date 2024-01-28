@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'sonner'
+import { Toaster } from 'sonner';
 
 // components
 import Layout from 'src/layout';
@@ -17,12 +17,14 @@ import ProductDetails from './pages/home/productDetails';
 
 // constants
 import { pages } from 'src/constants/page_routes';
+import Checkout from './pages/checkout';
+import Thankyou from './pages/checkout/thankyou';
 const queryClient = new QueryClient();
 
 function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Toaster/>
+			<Toaster />
 			<CartProvider>
 				<Layout>
 					<Routes>
@@ -41,7 +43,12 @@ function App() {
 							element={<Collections />}
 						/>
 						<Route path={pages.shop} element={<Shop />} />
-						<Route path={pages.productDetails + '/:id'} element={<ProductDetails />} />
+						<Route
+							path={pages.productDetails + '/:id'}
+							element={<ProductDetails />}
+						/>
+						<Route path={pages.checkout} element={<Checkout />} />
+						<Route path={pages.thankyou} element={<Thankyou />} />
 					</Routes>
 				</Layout>
 				<Cart />

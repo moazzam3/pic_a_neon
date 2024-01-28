@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { useQuery, useQueries } from '@tanstack/react-query';
 
@@ -15,6 +15,8 @@ import { categories, categoricProducts } from 'src/constants/services';
 import useCart from 'src/cart/hooks';
 import { pages } from 'src/constants/page_routes';
 import { Link } from 'react-router-dom';
+import Button from 'src/components/Button';
+import ToggleSelector from 'src/components/ToggleSelector';
 
 const Tabs = () => {
 	function classNames(...classes: string[]) {
@@ -48,7 +50,7 @@ const Tabs = () => {
 						});
 						return response.data;
 					},
-			}))
+			  }))
 			: [],
 	});
 
@@ -118,7 +120,7 @@ const Tabs = () => {
 								<Tab.Panel
 									key={products[0].id}
 									className={classNames(
-										'rounded-xl p-3',
+										'rounded-xl p-3'
 										// 'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
 									)}
 								>
@@ -137,47 +139,64 @@ export default Tabs;
 
 function CardSection({ products }) {
 	const { addToCart, openCart } = useCart();
-	const handleAddToCart = ( event: React.MouseEvent<HTMLButtonElement>, product: any) => {
+	const [selectedSize, setSelectedSize] = useState('md');
+	const handleAddToCart = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		product: any
+	) => {
 		event.preventDefault();
 		addToCart(product);
 		openCart();
 	};
+	const sizes = [ 'sm', 'md', 'lg', 'xl'];
 	return (
 		<>
 			<div className='flex gap-3 flex-wrap items-center justify-center'>
 				{products.map((product) => {
 					return (
 						<Link
-								to={pages.productDetails + `/${product.slug}`}
-								key={product.id}
-								className='flex flex-col gap-4 rounded-lg shadow-xl min-w-[300px]'
-							>
-								<div className='bg-common-white p-4'>
-									<div className='flex justify-center rounded-lg overflow-hidden'>
-										<img
-											src={config.imageBaseURL + product.image_path}
-											height={300}
-											width={200}
-											alt={product.name}
-										/>
-									</div>
+							to={pages.productDetails + `/${product.slug}`}
+							key={product.id}
+							className='flex flex-col gap-4 rounded-lg shadow-xl min-w-[300px] pb-4'
+						>
+							<div className='bg-common-white p-4'>
+								<div className='flex justify-center rounded-lg overflow-hidden'>
+									<img
+										src={config.imageBaseURL + product.image_path}
+										height={300}
+										width={200}
+										alt={product.name}
+									/>
 								</div>
-								<div className='flex flex-col px-4'>
-									<h3 className='font-medium text-lg leading-none mb-0 max-w-xs'>
-										{product.name}
-									</h3>
-									<div className=' flex items-center justify-between my-4'>
-										<p className='text-primary-500'>${product.price}</p>
-										<button
-											className='flex gap-1 items-center p-1 border hover:bg-gray-400/25 rounded transition-colors duration-150 ease-in'
-											onClick={(event) => handleAddToCart(event, {...product,quantity:1})}
-										>
-											<IconGardenCart />
-											<span>add to cart</span>
-										</button>
+							</div>
+							<div className='flex flex-col px-4 gap-3'>
+								<h3 className='font-medium text-lg leading-none mb-0 max-w-xs'>
+									{product.name}
+								</h3>
+
+								<p className='text-primary-500'>${product.price}</p>
+								<div>
+										<p>Size</p>
+										<div>
+											<ToggleSelector
+												options={sizes}
+												selected={selectedSize}
+												setSelected={setSelectedSize}
+											/>
+										</div>
 									</div>
-								</div>
-							</Link>
+								<Button
+									variant='contained'
+									fullWidth
+									onClick={(event) =>
+										handleAddToCart(event, { ...product, quantity: 1,size:selectedSize })
+									}
+								>
+									<IconGardenCart />
+									<span>add to cart</span>
+								</Button>
+							</div>
+						</Link>
 					);
 				})}
 			</div>

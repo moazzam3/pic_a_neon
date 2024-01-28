@@ -11,11 +11,17 @@ function Modal(props: ModalProps): ReactElement | null {
 
   if (!open) return null;
 
-  return <div className='fixed inset-0 bg-slate-500/20' onClick={onClose}>
-    <div className='bg-white w-1/2 mx-auto my-12 p-8 rounded-lg'>
-      {children}
+  return (
+    <div className='fixed inset-0 bg-black/60' onClick={onClose}>
+      <div className='relative h-full w-full'>
+        <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-md' onClick={e => {
+          e.stopPropagation();
+        }}>
+          {children}
+        </div>
+      </div>
     </div>
-  </div>;
+  );
 }
 
 export default Modal;

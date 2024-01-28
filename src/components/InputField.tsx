@@ -5,6 +5,7 @@ type InputFieldProps = (
 ) & {
 	label?: string;
 	error?: boolean;
+	fullWidth?: boolean;
 	multiline?: boolean;
 };
 
@@ -12,6 +13,7 @@ export const InputField: FC<InputFieldProps> = ({
 	label,
 	error,
 	multiline,
+	fullWidth,
 	...rest
 }) => {
 	const commonProps = {
@@ -20,7 +22,7 @@ export const InputField: FC<InputFieldProps> = ({
 		...rest,
 	};
 	return (
-		<div className='flex flex-col gap-1 mb-2'>
+		<div className={`flex flex-col gap-1 mb-2 ${fullWidth?'w-full':'w-auto'}`}>
 			{label && (
 				<label className='text-slate-900 ml-1' htmlFor={label + '!$%#^*'}>
 					{label}:
