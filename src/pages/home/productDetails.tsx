@@ -18,10 +18,13 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import { IconInfoTriangle } from '@tabler/icons-react';
 import useCart from 'src/cart/hooks';
 import { colors } from 'src/constants/neon_builder';
+import ToggleSelector from 'src/components/ToggleSelector';
+import { CartItem } from 'src/cart/cartContext';
 
 
 function ProductDetails() {
 	const navigate = useNavigate();
+	const [selectedSize, setSelectedSize] = useState('md');
 	const [color, setColor] = useState<Color>({
 		id: '1',
 		name: 'red',
@@ -42,7 +45,7 @@ function ProductDetails() {
 		window.scrollTo(0, 96);
 	}, [])
 
-	const handleAddToCart = ( product: any) => {
+	const handleAddToCart = ( product: CartItem) => {
 		addToCart(product);
 		openCart();
 	};
@@ -69,6 +72,7 @@ function ProductDetails() {
 			</div>
 		);
 	}
+	const sizes = [ 'sm', 'md', 'lg', 'xl'];
 	return (
 		<div className='max-container'>
 			<IconButton onClick={() => navigate(-1)}>
@@ -106,11 +110,12 @@ function ProductDetails() {
 						</div>
 					</div>
 					<div className='mt-8 flex flex-col gap-4'>
+						<ToggleSelector options={sizes}  selected={selectedSize} setSelected={setSelectedSize}/>
 						<ColorSelector value={color} onChange={setColor} options={colors} />
 						<Button
 							variant='outlined'
 							className='hover:bg-primary-500 hover:text-white transition-colors'
-							onClick={()=>handleAddToCart({...data?.products,quantity:1})}
+							onClick={()=>handleAddToCart({...data?.products,quantity:1,size:selectedSize,color:color.hex})}
 						>
 							Add to cart
 						</Button>

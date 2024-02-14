@@ -32,6 +32,8 @@ import bg7 from 'src/assets/builder_bgs/bg7.jpg';
 import { IconAlignRight } from '@tabler/icons-react';
 import { IconAlignLeft } from '@tabler/icons-react';
 import { IconAlignCenter } from '@tabler/icons-react';
+import useCart from 'src/cart/hooks';
+import { generateRandomId } from 'src/utils/helper';
 
 const images = [bg1, bg2, bg3, bg4, bg5, bg6, bg7];
 
@@ -74,6 +76,7 @@ function NeonBilder() {
 	const [size, setSize] = useState<Size>('small');
 	const [backgroundStyle, setBackgroundStyle] = useState<string>('');
 	const [noOfLines, setNoOfLines] = useState<string>('');
+	const { addToCart, openCart } = useCart();
 	const [color, setcolor] = useState<Color>({
 		id: '6',
 		name: 'pink',
@@ -126,7 +129,7 @@ function NeonBilder() {
 			small: 67.42,
 			medium: 95.29,
 			large: 112.08,
-			'extra large': 135.50,
+			'extra large': 135.5,
 		};
 		const pricePerCharacter = {
 			small: 15,
@@ -144,7 +147,7 @@ function NeonBilder() {
 		if (isNaN(perCharacterPrice)) return 0;
 
 		return Number(total + perCharacterPrice).toFixed(2);
-	}, [accessories, contentText,size]);
+	}, [accessories, contentText, size]);
 
 	const customStyles = {
 		'--neon-color': color.hex,
@@ -179,6 +182,19 @@ function NeonBilder() {
 
 	// Access the dimensions
 	const { totalWidthInches, totalHeightInches } = dimensions;
+
+	function generateCartPayload() {
+		const item = {
+			id: generateRandomId(4),
+			name: 'Custom Neon Sign',
+			price: totalPrice,
+			quantity: 1,
+			size: size,
+			image: images[currentBg],
+			customNeonBuilder: true,
+		};
+		return item;
+	}
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-8'>
@@ -341,6 +357,10 @@ function NeonBilder() {
 					<button
 						className='bg-primary-400 hover:bg-primary-600 w-full rounded-full p-3 text-white mt-4'
 						type='submit'
+						onClick={() => {
+							openCart()
+							addToCart(generateCartPayload());
+						}}
 					>
 						Add to Cart
 					</button>
