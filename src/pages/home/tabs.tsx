@@ -1,9 +1,8 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { useQuery, useQueries } from '@tanstack/react-query';
 
 // components
-import IconButton from 'src/components/IconButton';
 import axios from 'src/utils/axios';
 import config from 'src/config';
 
@@ -31,7 +30,7 @@ const Tabs = () => {
 		},
 	});
 
-	function sortAndSliceCategories(categories: any[]) {
+	function sortAndSliceCategories(categories: unknown[]) {
 		return categories.slice(0, 4).sort((a, b) => {
 			// Sort by name (case-insensitive)
 			const nameA = a.name.toLowerCase();
@@ -137,9 +136,21 @@ const Tabs = () => {
 
 export default Tabs;
 
-function CardSection({ products }) {
-	const { addToCart, openCart } = useCart();
+function CardSection({ products }:{products: unknown[]}) {
+	return (
+		<>
+			<div className='flex gap-3 flex-wrap items-center justify-center'>
+				{products.map((product) => {
+					return <Product product={product} />;
+				})}
+			</div>
+		</>
+	);
+}
+
+function Product({ product }) {
 	const [selectedSize, setSelectedSize] = useState('md');
+	const { addToCart, openCart } = useCart();
 	const handleAddToCart = (
 		event: React.MouseEvent<HTMLButtonElement>,
 		product: any
@@ -148,58 +159,62 @@ function CardSection({ products }) {
 		addToCart(product);
 		openCart();
 	};
-	const sizes = [ 'sm', 'md', 'lg', 'xl'];
+	const sizes = ['sm', 'md', 'lg', 'xl'];
+	const price = useMemo(() => {
+		if (!selectedSize) return 0;
+		if (selectedSize === 'sm') return Number(product.sm_size);
+		if (selectedSize === 'md') return Number(product.med_size);
+		if (selectedSize === 'lg') return Number(product.large_size);
+		if (selectedSize === 'xl') return Number(product.xlarge_size);
+		return 0;
+	}, [selectedSize, product]);
 	return (
-		<>
-			<div className='flex gap-3 flex-wrap items-center justify-center'>
-				{products.map((product) => {
-					return (
-						<Link
-							to={pages.productDetails + `/${product.slug}`}
-							key={product.id}
-							className='flex flex-col gap-4 rounded-lg shadow-xl min-w-[300px] pb-4'
-						>
-							<div className='bg-common-white p-4'>
-								<div className='flex justify-center rounded-lg overflow-hidden'>
-									<img
-										src={config.imageBaseURL + product.image_path}
-										height={300}
-										width={200}
-										alt={product.name}
-									/>
-								</div>
-							</div>
-							<div className='flex flex-col px-4 gap-3'>
-								<h3 className='font-medium text-lg leading-none mb-0 max-w-xs'>
-									{product.name}
-								</h3>
-
-								<p className='text-primary-500'>${product.price}</p>
-								<div>
-										<p>Size</p>
-										<div>
-											<ToggleSelector
-												options={sizes}
-												selected={selectedSize}
-												setSelected={setSelectedSize}
-											/>
-										</div>
-									</div>
-								<Button
-									variant='contained'
-									fullWidth
-									onClick={(event) =>
-										handleAddToCart(event, { ...product, quantity: 1,size:selectedSize })
-									}
-								>
-									<IconGardenCart />
-									<span>add to cart</span>
-								</Button>
-							</div>
-						</Link>
-					);
-				})}
+		<Link
+			to={pages.productDetails + `/${product.slug}`}
+			key={product.id}
+			className='flex flex-col gap-4 rounded-lg shadow-xl min-w-[300px] pb-4'
+		>
+			<div className='bg-common-white p-4'>
+				<div className='flex justify-center rounded-lg overflow-hidden'>
+					<img
+						src={config.imageBaseURL + product.image_path}
+						height={300}
+						width={200}
+						alt={product.name}
+					/>
+				</div>
 			</div>
-		</>
+			<div className='flex flex-col px-4 gap-3'>
+				<h3 className='font-medium text-lg leading-none mb-0 max-w-xs'>
+					{product.name}
+				</h3>
+
+				<p className='text-primary-500'>${price}</p>
+				<div>
+					<p>Size</p>
+					<div>
+						<ToggleSelector
+							options={sizes}
+							selected={selectedSize}
+							setSelected={setSelectedSize}
+						/>
+					</div>
+				</div>
+				<Button
+					variant='contained'
+					fullWidth
+					onClick={(event) =>
+						handleAddToCart(event, {
+							...product,
+							quantity: 1,
+							size: selectedSize,
+						})
+					}
+				>
+					<IconGardenCart />
+					<span>add to cart</span>
+				</Button>
+			</div>
+		</Link>
 	);
 }

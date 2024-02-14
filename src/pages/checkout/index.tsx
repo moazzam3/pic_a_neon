@@ -49,7 +49,7 @@ function Checkout() {
 									{item.name}
 								</Link>
 
-								<p className='text-primary-500'>${item.price}</p>
+								<p className='text-primary-500'>{ item.quantity} x ${item.price}</p>
 							</div>
 						</div>
 					);
@@ -76,7 +76,7 @@ function Checkout() {
 					</div>
 					<div className='flex justify-between'>
 						<p className='text-lg'>Total:</p>
-						<p className='text-primary-500'>${total + isRushOrder ? 50 : 0}</p>
+						<p className='text-primary-500'>${Boolean(total + isRushOrder) ? 50 : 0}</p>
 					</div>
 				</div>
 			</div>

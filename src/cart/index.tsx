@@ -61,7 +61,7 @@ function Cart() {
 								return (
 									<div
 										key={item.id}
-										className='flex items-center w-full max-w-xs gap-2'
+										className='flex items-center w-full gap-2'
 									>
 										<div className='w-[30%] border-gray-600/30 rounded-sm overflow-hidden self-stretch'>
 											<img height={100} width={100} src={item.image} />
@@ -87,7 +87,7 @@ function Cart() {
 														<IconPlus />
 													</button>
 												</div>
-												<p>${item.price}</p>
+												<p>{item.quantity} x ${item.price}</p>
 											</div>
 										</div>
 									</div>
@@ -96,9 +96,9 @@ function Cart() {
 							return (
 								<div
 									key={item.id}
-									className='flex items-center w-full max-w-xs gap-2'
+									className='flex items-center w-full gap-2'
 								>
-									<div className='w-[30%] border border-gray-600/30 rounded-sm overflow-hidden self-stretch'>
+									<div className='w-[30%] border border-gray-600/30npm run dev rounded-sm overflow-hidden self-stretch'>
 										<img
 											height={100}
 											width={100}
@@ -131,8 +131,8 @@ function Cart() {
 													<IconPlus />
 												</button>
 											</div>
-											<p>${item.price}</p>
-										di</div>
+											<p>{ item.quantity} x ${item.price}</p>
+										</div>
 									</div>
 								</div>
 							);
