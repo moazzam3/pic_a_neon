@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate,Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
@@ -49,6 +49,14 @@ function ProductDetails() {
 		addToCart(product);
 		openCart();
 	};
+	const price = useMemo(() => {
+		if (!selectedSize) return 0;
+		if (selectedSize === 'sm') return Number(data?.products?.sm_size);
+		if (selectedSize === 'md') return Number(data?.products?.med_size);
+		if (selectedSize === 'lg') return Number(data?.products?.large_size);
+		if (selectedSize === 'xl') return Number(data?.products?.xlarge_size);
+		return 0;
+	}, [selectedSize,data]);
 
 	if (isPending) {
 		return (
@@ -72,7 +80,8 @@ function ProductDetails() {
 			</div>
 		);
 	}
-	const sizes = [ 'sm', 'md', 'lg', 'xl'];
+	const sizes = ['sm', 'md', 'lg', 'xl'];
+	
 	return (
 		<div className='max-container'>
 			<IconButton onClick={() => navigate(-1)}>
@@ -91,7 +100,7 @@ function ProductDetails() {
 						{data?.products.name}
 					</h1>
 					<p className='text-lg xl:text-2xl'>
-						{data?.products.price}
+						{price}
 						<span className='text-primary-500'>$</span>
 					</p>
 					<div className='mt-8'>
